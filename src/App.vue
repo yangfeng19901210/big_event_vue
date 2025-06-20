@@ -14,14 +14,16 @@
   // 调用ref函数定义响应式数据
   const msg = ref('西安');
   import apiVue from './Api.vue'
+  import Articlevue from './Article.vue';
 </script>
 
 <template>
 <!-- html -->
 <!-- <h1>北京</h1> -->
-  <h1>{{msg}}</h1>
+  <!-- <h1>{{msg}}</h1>
   <br/>
-  <apiVue/>
+  <apiVue/> -->
+  <Articlevue/>
 </template>
 
 <style scoped>
