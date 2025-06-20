@@ -15,6 +15,7 @@
   const msg = ref('西安');
   import apiVue from './Api.vue'
   import Articlevue from './Article.vue';
+  import buttonVue from './test/button.vue';
 </script>
 
 <template>
@@ -23,7 +24,9 @@
   <!-- <h1>{{msg}}</h1>
   <br/>
   <apiVue/> -->
-  <Articlevue/>
+  <!-- <Articlevue/> -->
+  <br/>
+  <buttonVue/>
 </template>
 
 <style scoped>
