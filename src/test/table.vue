@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+import { reactive } from 'vue'
+
+const formInline = reactive({
+  category: '',
+  state: ''
+})
+
+const onSubmit = () => {
+  console.log('submit!')
+}
 import { ref } from 'vue'
 import type { ComponentSize } from 'element-plus'
 
@@ -14,6 +24,7 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   console.log(`current page: ${val}`)
 }
+
 import {
   Delete,
   Edit
@@ -49,6 +60,27 @@ const tableData = [
 </script>
 
 <template>
+  <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form-item label="文章分类">
+      <el-select v-model="formInline.category"placeholder="请选择" clearable style="width: 190px">
+        <el-option label="时事" value="时事" />
+        <el-option label="篮球" value="篮球" />
+      </el-select>
+    </el-form-item>
+    <el-form-item label="发布状态">
+      <el-select v-model="formInline.state"placeholder="请选择" clearable style="width: 190px">
+        <el-option label="已发布" value="已发布" />
+        <el-option label="草稿" value="草稿" />
+      </el-select>
+    </el-form-item>
+   
+    <el-form-item>
+      <el-button type="primary" @click="onSubmit">搜索</el-button>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="default" @click="onSubmit">重置</el-button>
+    </el-form-item>
+  </el-form>
   <el-table :data="tableData" style="width: 100%">
     <el-table-column prop="title" label="文章标题" />
     <el-table-column prop="category" label="分类" />
