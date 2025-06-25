@@ -77,7 +77,10 @@ const tableData = [
     />
 </template>
 <style scoped>
-    /* 添加类选择器，控制元素 */
+    /* 添加类选择器，控制元素 
+    display: flex：启用 ​Flex 布局，使子元素水平或垂直排列
+    justify-content: flex-end：子元素向右对齐​（从右向左布局时为左对齐）
+    */
     .el-p{
         margin-top: 20px;
         display: flex;
