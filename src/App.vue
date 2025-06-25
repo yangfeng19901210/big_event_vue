@@ -16,6 +16,7 @@
   import apiVue from './Api.vue'
   import Articlevue from './Article.vue';
   import buttonVue from './test/button.vue';
+  import tableVue from './test/table.vue';
 </script>
 
 <template>
@@ -26,7 +27,8 @@
   <apiVue/> -->
   <!-- <Articlevue/> -->
   <br/>
-  <buttonVue/>
+  <!-- <buttonVue/> -->
+   <tableVue/>
 </template>
 
 <style scoped>
