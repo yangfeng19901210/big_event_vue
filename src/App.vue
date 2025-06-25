@@ -1,15 +1,10 @@
 <script setup>
-  import {ref} from 'vue';
-  // 调用ref函数定义响应式数据
-  const msg = ref('西安');
-  import apiVue from './Api.vue'
-  import Articlevue from './Article.vue';
-  import buttonVue from './test/button.vue';
-  import tableVue from './test/table.vue';
+  import Loginvue from '@/views/Login.vue'
 </script>
 
 <template>
-  hello vue3
+  <!-- 大事件登录注册页面 -->
+  <Loginvue/>
 </template>
 
 <style scoped>
