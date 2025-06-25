@@ -1,14 +1,3 @@
-<!-- <script>
-  // 写数据
-  export default{
-    data() {
-      return {
-        msg:'上海'
-      }
-    }
-  }
-</script> -->
-
 <script setup>
   import {ref} from 'vue';
   // 调用ref函数定义响应式数据
@@ -20,20 +9,12 @@
 </script>
 
 <template>
-<!-- html -->
-<!-- <h1>北京</h1> -->
-  <!-- <h1>{{msg}}</h1>
-  <br/>
-  <apiVue/> -->
-  <!-- <Articlevue/> -->
-  <br/>
-  <!-- <buttonVue/> -->
-   <tableVue/>
+  hello vue3
 </template>
 
 <style scoped>
   /* 样式 */
-  h1{
+  /* h1{
     color: red;
-  }
+  } */
 </style>
