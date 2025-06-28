@@ -7,7 +7,7 @@ import { ref } from 'vue'
 const isRegister = ref(false)
 // 定义注册数据模型
 const registerData = ref({
-    username:'',
+    userName:'',
     password:'',
     rePassword:''
 })
@@ -23,7 +23,7 @@ const checkRePassword = (rule,value,callback)=>{
 }
 // 定义表单校验规则
 const rules = {
-  username: [
+  userName: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
     { min: 5, max: 16, message: '长度为5~16位非空字符', trigger: 'blur' }
   ],
@@ -35,6 +35,17 @@ const rules = {
     { validator: checkRePassword, trigger: 'blur' }
   ]
   
+}
+// 调用后台接口完成注册
+import {userRegisterService} from '@/api/user.js'
+const register = async ()=>{
+    // registerData是一个响应式对象，如果要获取值，需要.value
+    let result = await userRegisterService(registerData.value);
+    if(result.code===200 && result.data===true){
+        alert(result.message?result.message:'注册成功');
+    }else{
+        alert(result.message);
+    }
 }
 </script>
 
@@ -59,8 +70,8 @@ const rules = {
                 <el-form-item>
                     <h1>注册</h1>
                 </el-form-item>
-                <el-form-item prop="username">
-                    <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
+                <el-form-item prop="userName">
+                    <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.userName"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
                     <el-input :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
@@ -70,7 +81,7 @@ const rules = {
                 </el-form-item>
                 <!-- 注册按钮 -->
                 <el-form-item>
-                    <el-button class="button" type="primary" auto-insert-space>
+                    <el-button class="button" type="primary" auto-insert-space @click="register">
                         注册
                     </el-button>
                 </el-form-item>
