@@ -44,6 +44,11 @@ const register = async ()=>{
     let result = await userRegisterService(registerData.value);
     ElMessage.success(result.msg?result.msg:'注册成功');
 }
+// 执行登录
+const login = async ()=>{
+    let result = userLoginService(registerData.value);
+    ElMessage.success(result.msg?result.msg:'登录成功');
+}
 </script>
 
 <template>
@@ -107,7 +112,7 @@ const register = async ()=>{
                 </el-form-item>
                 <!-- 登录按钮 -->
                 <el-form-item>
-                    <el-button class="button" type="primary" auto-insert-space>登录</el-button>
+                    <el-button class="button" type="primary" auto-insert-space @click="login">登录</el-button>
                 </el-form-item>
                 <el-form-item class="flex">
                     <el-link type="info" underline="never" @click="isRegister = true">
