@@ -1,6 +1,7 @@
 <script setup>
 // 导入样式图标
 import { User, Lock } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 // 从vue中导入ref函数
 import { ref } from 'vue'
 //控制注册与登录表单的显示， 默认显示注册
@@ -41,28 +42,7 @@ import {userRegisterService,userLoginService} from '@/api/user.js'
 const register = async ()=>{
     // registerData是一个响应式对象，如果要获取值，需要.value
     let result = await userRegisterService(registerData.value);
-    if(result.code===200 && result.data===true){
-        alert(result.message?result.message:'注册成功');
-    }else{
-        alert(result.message);
-    }
-}
-//定义登录函数
-const login = async ()=>{
-    let result = await userLoginService(registerData.value);
-    if(result.code===200){
-        alert(result.message?result.message:'注册成功');
-    }else{
-        alert(result.message);
-    }
-
-}
-const clearRegisterData = ()=>{
-    registerData.value = {
-        username:'',
-        password:'',
-        rePassword:''
-    }
+    ElMessage.success(result.msg?result.msg:'注册成功');
 }
 </script>
 
@@ -103,7 +83,7 @@ const clearRegisterData = ()=>{
                     </el-button>
                 </el-form-item>
                 <el-form-item class="flex">
-                    <el-link type="info" :underline="false" @click="isRegister = false;clearRegisterData()">
+                    <el-link type="info" underline="never" @click="isRegister = false">
                         ← 返回
                     </el-link>
                 </el-form-item>
@@ -122,7 +102,7 @@ const clearRegisterData = ()=>{
                 <el-form-item class="flex">
                     <div class="flex">
                         <el-checkbox>记住我</el-checkbox>
-                        <el-link type="primary" :underline="false">忘记密码？</el-link>
+                        <el-link type="primary" underline="never">忘记密码？</el-link>
                     </div>
                 </el-form-item>
                 <!-- 登录按钮 -->
@@ -130,7 +110,7 @@ const clearRegisterData = ()=>{
                     <el-button class="button" type="primary" auto-insert-space @click="login">登录</el-button>
                 </el-form-item>
                 <el-form-item class="flex">
-                    <el-link type="info" :underline="false" @click="isRegister = true;clearRegisterData()">
+                    <el-link type="info" underline="never" @click="isRegister = true">
                         注册 →
                     </el-link>
                 </el-form-item>
