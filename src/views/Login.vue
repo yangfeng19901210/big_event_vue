@@ -1,13 +1,14 @@
 <script setup>
 // 导入样式图标
 import { User, Lock } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 // 从vue中导入ref函数
 import { ref } from 'vue'
 //控制注册与登录表单的显示， 默认显示注册
 const isRegister = ref(false)
 // 定义注册数据模型
 const registerData = ref({
-    userName:'',
+    username:'',
     password:'',
     rePassword:''
 })
@@ -23,7 +24,7 @@ const checkRePassword = (rule,value,callback)=>{
 }
 // 定义表单校验规则
 const rules = {
-  userName: [
+  username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
     { min: 5, max: 16, message: '长度为5~16位非空字符', trigger: 'blur' }
   ],
@@ -41,11 +42,7 @@ import {userRegisterService} from '@/api/user.js'
 const register = async ()=>{
     // registerData是一个响应式对象，如果要获取值，需要.value
     let result = await userRegisterService(registerData.value);
-    if(result.code===200 && result.data===true){
-        alert(result.message?result.message:'注册成功');
-    }else{
-        alert(result.message);
-    }
+    ElMessage.success(result.msg?result.msg:'注册成功');
 }
 </script>
 
@@ -70,8 +67,8 @@ const register = async ()=>{
                 <el-form-item>
                     <h1>注册</h1>
                 </el-form-item>
-                <el-form-item prop="userName">
-                    <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.userName"></el-input>
+                <el-form-item prop="username">
+                    <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
                     <el-input :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
@@ -86,7 +83,7 @@ const register = async ()=>{
                     </el-button>
                 </el-form-item>
                 <el-form-item class="flex">
-                    <el-link type="info" :underline="false" @click="isRegister = false">
+                    <el-link type="info" underline="never" @click="isRegister = false">
                         ← 返回
                     </el-link>
                 </el-form-item>
@@ -105,7 +102,7 @@ const register = async ()=>{
                 <el-form-item class="flex">
                     <div class="flex">
                         <el-checkbox>记住我</el-checkbox>
-                        <el-link type="primary" :underline="false">忘记密码？</el-link>
+                        <el-link type="primary" underline="never">忘记密码？</el-link>
                     </div>
                 </el-form-item>
                 <!-- 登录按钮 -->
@@ -113,7 +110,7 @@ const register = async ()=>{
                     <el-button class="button" type="primary" auto-insert-space>登录</el-button>
                 </el-form-item>
                 <el-form-item class="flex">
-                    <el-link type="info" :underline="false" @click="isRegister = true">
+                    <el-link type="info" underline="never" @click="isRegister = true">
                         注册 →
                     </el-link>
                 </el-form-item>
