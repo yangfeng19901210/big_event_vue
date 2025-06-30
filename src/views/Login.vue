@@ -89,15 +89,15 @@ const register = async ()=>{
                 </el-form-item>
             </el-form>
             <!-- 登录表单 -->
-            <el-form ref="form" size="large" autocomplete="off" v-else :model="registerData" :rules="rules">
+            <el-form ref="form" size="large" autocomplete="off" v-else>
                 <el-form-item>
                     <h1>登录</h1>
                 </el-form-item>
-                <el-form-item prop="username">
-                    <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
+                <el-form-item>
+                    <el-input :prefix-icon="User" placeholder="请输入用户名"></el-input>
                 </el-form-item>
-                <el-form-item prop="password">
-                    <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
+                <el-form-item>
+                    <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码"></el-input>
                 </el-form-item>
                 <el-form-item class="flex">
                     <div class="flex">
@@ -107,7 +107,7 @@ const register = async ()=>{
                 </el-form-item>
                 <!-- 登录按钮 -->
                 <el-form-item>
-                    <el-button class="button" type="primary" auto-insert-space @click="login">登录</el-button>
+                    <el-button class="button" type="primary" auto-insert-space>登录</el-button>
                 </el-form-item>
                 <el-form-item class="flex">
                     <el-link type="info" underline="never" @click="isRegister = true">
