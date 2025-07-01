@@ -6,6 +6,8 @@ import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 //控制注册与登录表单的显示， 默认显示注册
 const isRegister = ref(false)
+// 导入创建好的路由
+import {useRouter} from 'vue-router'
 // 定义注册数据模型
 const registerData = ref({
     username:'',
@@ -45,9 +47,12 @@ const register = async ()=>{
     ElMessage.success(result.msg?result.msg:'注册成功');
 }
 // 执行登录
+const router = useRouter();
 const login = async ()=>{
     let result = await userLoginService(registerData.value);
     ElMessage.success(result.msg?result.msg:'登录成功');
+    // 登录成功后跳转到首页
+    router.push('/');
 }
 //注册页面和登录页面切换时清空表单数据
 const clearRegisterData = ()=>{
