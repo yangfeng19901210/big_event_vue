@@ -82,7 +82,7 @@ import avatar from '@/assets/default.png'
                 </el-dropdown>
             </el-header>
             <!-- 中间区域 -->
-            <el-main class="content">
+            <el-main>
                 <!-- <div style="width: 1470px; height: 660px;border: 1px solid red;">
                     内容展示区
                 </div> -->
