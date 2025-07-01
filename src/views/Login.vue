@@ -46,8 +46,16 @@ const register = async ()=>{
 }
 // 执行登录
 const login = async ()=>{
-    let result = userLoginService(registerData.value);
+    let result = await userLoginService(registerData.value);
     ElMessage.success(result.msg?result.msg:'登录成功');
+}
+//注册页面和登录页面切换时清空表单数据
+const clearRegisterData = ()=>{
+    registerData.value={
+        username:'',
+        password:'',
+        rePassword:''
+    }
 }
 </script>
 
@@ -88,21 +96,21 @@ const login = async ()=>{
                     </el-button>
                 </el-form-item>
                 <el-form-item class="flex">
-                    <el-link type="info" underline="never" @click="isRegister = false">
+                    <el-link type="info" underline="never" @click="isRegister = false;clearRegisterData()">
                         ← 返回
                     </el-link>
                 </el-form-item>
             </el-form>
             <!-- 登录表单 -->
-            <el-form ref="form" size="large" autocomplete="off" v-else>
+            <el-form ref="form" size="large" autocomplete="off" v-else :model="registerData" :rules="rules">
                 <el-form-item>
                     <h1>登录</h1>
                 </el-form-item>
-                <el-form-item>
-                    <el-input :prefix-icon="User" placeholder="请输入用户名"></el-input>
+                <el-form-item prop="username">
+                    <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
                 </el-form-item>
-                <el-form-item>
-                    <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码"></el-input>
+                <el-form-item prop="password">
+                    <el-input name="password" :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
                 </el-form-item>
                 <el-form-item class="flex">
                     <div class="flex">
@@ -115,7 +123,7 @@ const login = async ()=>{
                     <el-button class="button" type="primary" auto-insert-space @click="login">登录</el-button>
                 </el-form-item>
                 <el-form-item class="flex">
-                    <el-link type="info" underline="never" @click="isRegister = true">
+                    <el-link type="info" underline="never" @click="isRegister = true;clearRegisterData()">
                         注册 →
                     </el-link>
                 </el-form-item>
