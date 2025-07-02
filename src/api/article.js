@@ -1,4 +1,5 @@
 import request from '@/utils/request.js'
+import {useTokenStore} from '@/stores/token.js'
 // 获取所有文章信息函数
 export function articleGetAllService(){
     return request.get("/article/getAll");
@@ -9,5 +10,7 @@ export function articleSearchService(searchConditions){
 }
 // 文章分类列表查询
 export const articleCategoryListService = ()=>{
-    return request.get('/category');
+    const tokenStore = useTokenStore();
+    // 在pinia中定义的响应式数据,都不需要.value
+    return request.get('/category',{headers:{'Authorization':tokenStore.token}});
 }

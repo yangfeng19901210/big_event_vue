@@ -9,6 +9,7 @@ import { ref } from 'vue'
 const isRegister = ref(false)
 // 导入创建好的路由
 import {useRouter} from 'vue-router'
+import {useTokenStore} from '@/stores/token.js'
 // 定义注册数据模型
 const registerData = ref({
     username:'',
@@ -49,9 +50,12 @@ const register = async ()=>{
 }
 // 执行登录
 const router = useRouter();
+const tokenStore = useTokenStore();
 const login = async ()=>{
     let result = await userLoginService(registerData.value);
     ElMessage.success(result.msg?result.msg:'登录成功');
+    // 登录成功存储token
+    tokenStore.setToken(result.data);
     // 登录成功后跳转到首页
     router.push('/');
 }
