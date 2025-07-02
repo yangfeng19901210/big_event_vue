@@ -4,7 +4,8 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 // 从vue中导入ref函数
 import { ref } from 'vue'
-//控制注册与登录表单的显示， 默认显示注册
+//控制注册与登录表单的显示， 默认显示注册,js中操作ref定义的响应数据必须使用变量.value对值进行操作，而在
+//Vue 3 的模板编译器会将模板中对 ref 的直接操作转换为.value 赋值
 const isRegister = ref(false)
 // 导入创建好的路由
 import {useRouter} from 'vue-router'
