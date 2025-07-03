@@ -2,11 +2,25 @@
 // 导入axios库
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import {useTokenStore} from '@/stores/token.js'
 //定义变量记录公共前缀
 // const baseURL = "http://localhost:8090";
 const baseURL = "/api";
 const instance = axios.create({baseURL});
-
+// 添加请求拦截器
+instance.interceptors.request.use(
+    // 请求前回调添加token
+    (config)=>{
+        const tokenStore = useTokenStore();
+        if(tokenStore.token){
+            config.headers.Authorization = tokenStore.token;
+        }
+        return config;
+    },
+    (err)=>{
+        Promise.reject(err);
+    }
+);
 // 添加响应拦截器(本身就是异步处理)
 instance.interceptors.response.use(
     result=>{
