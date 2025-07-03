@@ -3,6 +3,7 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import {useTokenStore} from '@/stores/token.js'
+import router from '@/router'
 //定义变量记录公共前缀
 // const baseURL = "http://localhost:8090";
 const baseURL = "/api";
@@ -27,15 +28,15 @@ instance.interceptors.response.use(
         // 判断业务状态码
         if(result.data.code===200){
             return result.data;
+        }else if (result.data.code===401) {
+            ElMessage.error('请先登录');
+            router.push('/login');
         }
-        ElMessage.error(result.data.msg?result.data.msg:'服务异常');
         return Promise.reject(result.data);
         
     },
     err=>{
-        // alert('服务异常');
-        ElMessage.error('服务异常');
-        log.error(err);
+        ElMessage.error('服务异常'); 
         return Promise.reject(err);//异步的状态转化成失败的状态
     }
 )
