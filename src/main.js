@@ -8,7 +8,10 @@ import 'element-plus/dist/index.css'
 import router from '@/router'
 // 导入pinia
 import {createPinia} from 'pinia';
+import { createPersistedState } from 'pinia-persistedstate-plugin'
 const pinia = createPinia();
+const persist = createPersistedState();
+pinia.use(persist);
 // 引入汉化插件
 import locale from "element-plus/dist/locale/zh-cn.js"
 // 创建一个新的vue应用实例
