@@ -28,7 +28,7 @@ const categorys = ref([
     }
 ])
 // 申明异步函数加载文章分类列表
-import {articleCategoryListService,articleCategoryAddService} from '@/api/article.js'
+import {articleCategoryListService,articleCategoryAddService,articleCategoryUpdateService} from '@/api/article.js'
 import { ElMessage } from 'element-plus'
 const articleCategoryList = async()=>{
     let result = await articleCategoryListService();
@@ -75,6 +75,22 @@ const clearCategoryModelData = ()=>{
         categoryAlias:''
     }
 }
+// 定义数据模型，动态切换对话框标题
+const title = ref('');
+const showCategoryData = (row)=>{
+    dialogVisible.value = true;
+    title.value='编辑分类';
+    categoryModel.value.categoryName = row.categoryName;
+    categoryModel.value.categoryAlias = row.categoryAlias;
+    categoryModel.value.id = row.id;
+}
+// 编辑分类提交数据函数
+const updateCategory = async ()=>{
+    let result = await articleCategoryUpdateService(categoryModel.value);
+    ElMessage.success(result.message?result.message:'修改成功');
+    dialogVisible.value = false;
+    articleCategoryList();
+}
 </script>
 <template>
     <el-card class="page-container">
@@ -82,7 +98,7 @@ const clearCategoryModelData = ()=>{
             <div class="header">
                 <span>文章分类</span>
                 <div class="extra">
-                    <el-button type="primary" @click="dialogVisible = true;clearCategoryModelData()">添加分类</el-button>
+                    <el-button type="primary" @click="dialogVisible = true;clearCategoryModelData();title='添加分类'">添加分类</el-button>
                 </div>
             </div>
         </template>
@@ -92,7 +108,7 @@ const clearCategoryModelData = ()=>{
             <el-table-column label="分类别名" prop="categoryAlias"></el-table-column>
             <el-table-column label="操作" width="100">
                 <template #default="{ row }">
-                    <el-button :icon="Edit" circle plain type="primary" ></el-button>
+                    <el-button :icon="Edit" circle plain type="primary" @click="showCategoryData(row)"></el-button>
                     <el-button :icon="Delete" circle plain type="danger"></el-button>
                 </template>
             </el-table-column>
@@ -100,24 +116,25 @@ const clearCategoryModelData = ()=>{
                 <el-empty description="没有数据" />
             </template>
         </el-table>
+        <!-- 添加分类弹窗 -->
+        <el-dialog v-model="dialogVisible" :title="title" width="30%">
+            <el-form :model="categoryModel" :rules="rules" label-width="100px" style="padding-right: 30px" ref="categoryFormef">
+                <el-form-item label="分类名称" prop="categoryName">
+                    <el-input v-model="categoryModel.categoryName" minlength="1" maxlength="10"></el-input>
+                </el-form-item>
+                <el-form-item label="分类别名" prop="categoryAlias">
+                    <el-input v-model="categoryModel.categoryAlias" minlength="1" maxlength="15"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="title==='添加分类'?addCategory():updateCategory()"> 确认 </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </el-card>
-    <!-- 添加分类弹窗 -->
-    <el-dialog v-model="dialogVisible" title="添加文章分类" width="30%">
-        <el-form :model="categoryModel" :rules="rules" label-width="100px" style="padding-right: 30px" ref="categoryFormef">
-            <el-form-item label="分类名称" prop="categoryName">
-                <el-input v-model="categoryModel.categoryName" minlength="1" maxlength="10"></el-input>
-            </el-form-item>
-            <el-form-item label="分类别名" prop="categoryAlias">
-                <el-input v-model="categoryModel.categoryAlias" minlength="1" maxlength="15"></el-input>
-            </el-form-item>
-        </el-form>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="addCategory"> 确认 </el-button>
-            </span>
-        </template>
-    </el-dialog>
+    
 </template>
 
 <style lang="scss" scoped>

@@ -12,6 +12,10 @@ export function articleSearchService(searchConditions){
 export const articleCategoryAddService = (categoryModel)=>{
     return request.post('/category',categoryModel);
 }
+// 文章分类修改
+export const articleCategoryUpdateService = (categoryModel)=>{
+    return request.put('/category',categoryModel);
+}
 // 文章分类列表查询
 export const articleCategoryListService = ()=>{
     const tokenStore = useTokenStore();
