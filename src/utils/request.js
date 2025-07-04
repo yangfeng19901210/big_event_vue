@@ -29,7 +29,7 @@ instance.interceptors.response.use(
         if(result.data.code===200){
             return result.data;
         }else if (result.data.code===401) {
-            ElMessage.error('请先登录');
+            ElMessage.error(result.data.message?result.data.message:'请先登录');
             router.push('/login');
         }
         return Promise.reject(result.data);
