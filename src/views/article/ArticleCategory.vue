@@ -95,7 +95,7 @@ const clearCategoryModelData = ()=>{
     </el-card>
     <!-- 添加分类弹窗 -->
     <el-dialog v-model="dialogVisible" title="添加文章分类" width="30%">
-        <el-form :model="categoryModel" :rules="rules" label-width="100px" style="padding-right: 30px">
+        <el-form :model="categoryModel" :rules="rules" label-width="100px" style="padding-right: 30px" ref="categoryFormef">
             <el-form-item label="分类名称" prop="categoryName">
                 <el-input v-model="categoryModel.categoryName" minlength="1" maxlength="10"></el-input>
             </el-form-item>
