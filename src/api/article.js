@@ -8,6 +8,10 @@ export function articleGetAllService(){
 export function articleSearchService(searchConditions){
     return request.get("/article/search",{params:searchConditions}); 
 }
+// 添加文章分类
+export const articleCategoryAddService = (categoryModel)=>{
+    return request.post('/category',categoryModel);
+}
 // 文章分类列表查询
 export const articleCategoryListService = ()=>{
     const tokenStore = useTokenStore();
