@@ -53,12 +53,20 @@ const rules = {
         { required: true, message: '请输入分类别名', trigger: 'blur' },
     ]
 }
+const categoryFormef = ref(null); 
 // 访问后台添加分类
 const addCategory = async ()=>{
-    let result = await articleCategoryAddService(categoryModel.value);
-    ElMessage.success(result.message?result.message:'添加成功');
-    dialogVisible.value = false;
-    articleCategoryList();
+    categoryFormef.value.validate(async(valid) => {
+        if (valid) {
+            let result = await articleCategoryAddService(categoryModel.value);
+            ElMessage.success(result.message?result.message:'添加成功');
+            dialogVisible.value = false;
+            articleCategoryList();
+        } else {
+            ElMessage.error('请填写表单必须项');
+        }
+    });
+    
 }
 // 每次打开时清空之前的数据
 const clearCategoryModelData = ()=>{
