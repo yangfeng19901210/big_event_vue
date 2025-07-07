@@ -58,7 +58,7 @@ import avatar from '@/assets/default.png'
                         <span>重置密码</span>
                     </el-menu-item>
                 </el-sub-menu>
-                <el-menu-item index="/article/manage">
+                <el-menu-item index="/system">
                     <el-icon><Setting /></el-icon>
                     <span>系统管理</span>
                 </el-menu-item>

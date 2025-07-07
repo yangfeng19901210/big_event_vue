@@ -7,6 +7,7 @@ import ArticleManage from '@/views/article/ArticleManage.vue';
 import UserInfo from '@/views/user/UserInfo.vue';
 import UserAvatar from '@/views/user/UserAvatar.vue';
 import UserResetPassword from '@/views/user/UserResetPassword.vue';
+import System from '@/views/system/System.vue';
 // 定义路由关系
 const routes = [
   { path: '/login', component: Loginvue },
@@ -31,6 +32,10 @@ const routes = [
       {
         path: '/user/resetPassword',
         component: UserResetPassword,
+      },
+      {
+        path: '/system',
+        component: System,
       }
     ],
   }

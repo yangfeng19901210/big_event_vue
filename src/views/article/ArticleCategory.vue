@@ -4,29 +4,7 @@ import {
     Delete
 } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-const categorys = ref([
-    {
-        "id": 3,
-        "categoryName": "美食",
-        "categoryAlias": "my",
-        "createTime": "2023-09-02 12:06:59",
-        "updateTime": "2023-09-02 12:06:59"
-    },
-    {
-        "id": 4,
-        "categoryName": "娱乐",
-        "categoryAlias": "yl",
-        "createTime": "2023-09-02 12:08:16",
-        "updateTime": "2023-09-02 12:08:16"
-    },
-    {
-        "id": 5,
-        "categoryName": "军事",
-        "categoryAlias": "js",
-        "createTime": "2023-09-02 12:08:33",
-        "updateTime": "2023-09-02 12:08:33"
-    }
-])
+const categorys = ref([]);
 // 申明异步函数加载文章分类列表
 import {articleCategoryListService,articleCategoryAddService,
     articleCategoryUpdateService,articleCategoryDeleteService} from '@/api/article.js'
