@@ -28,8 +28,9 @@ const categorys = ref([
     }
 ])
 // 申明异步函数加载文章分类列表
-import {articleCategoryListService,articleCategoryAddService,articleCategoryUpdateService} from '@/api/article.js'
-import { ElMessage } from 'element-plus'
+import {articleCategoryListService,articleCategoryAddService,
+    articleCategoryUpdateService,articleCategoryDeleteService} from '@/api/article.js'
+import { ElMessage,ElMessageBox } from 'element-plus'
 const articleCategoryList = async()=>{
     let result = await articleCategoryListService();
     categorys.value = result.data;
@@ -84,6 +85,32 @@ const showCategoryData = (row)=>{
     categoryModel.value.categoryAlias = row.categoryAlias;
     categoryModel.value.id = row.id;
 }
+// 删除文章分类函数
+const deleteCategory = (row)=>{
+    ElMessageBox.confirm(
+        '你确认删除该分类信息吗？',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(async () => {
+            //用户点击了确认
+            let result = await articleCategoryDeleteService(row.id)
+            ElMessage.success(result.message?result.message:'删除成功')
+            //再次调用getAllCategory，获取所有文章分类
+            articleCategoryList()
+        })
+        .catch(() => {
+            //用户点击了取消
+            ElMessage({
+                type: 'info',
+                message: '取消删除',
+            })
+        })
+}
 // 编辑分类提交数据函数
 const updateCategory = async ()=>{
     let result = await articleCategoryUpdateService(categoryModel.value);
@@ -109,7 +136,7 @@ const updateCategory = async ()=>{
             <el-table-column label="操作" width="100">
                 <template #default="{ row }">
                     <el-button :icon="Edit" circle plain type="primary" @click="showCategoryData(row)"></el-button>
-                    <el-button :icon="Delete" circle plain type="danger"></el-button>
+                    <el-button :icon="Delete" circle plain type="danger" @click="deleteCategory(row)"></el-button>
                 </template>
             </el-table-column>
             <template #empty>

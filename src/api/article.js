@@ -16,6 +16,10 @@ export const articleCategoryAddService = (categoryModel)=>{
 export const articleCategoryUpdateService = (categoryModel)=>{
     return request.put('/category',categoryModel);
 }
+//删除文章分类
+export const articleCategoryDeleteService = (id)=>{
+    return request.delete('/category?id='+id);
+}
 // 文章分类列表查询
 export const articleCategoryListService = ()=>{
     const tokenStore = useTokenStore();
