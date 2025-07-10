@@ -5,7 +5,7 @@ import {
 } from '@element-plus/icons-vue'
 
 import { ref } from 'vue'
-
+import {articleCategoryListService,articlePageService} from '@/api/article.js';
 //文章分类数据模型
 const categorys = ref([
     {
@@ -74,7 +74,7 @@ const articles = ref([
 //分页条数据模型
 const pageNum = ref(1)//当前页
 const total = ref(20)//总条数
-const pageSize = ref(3)//每页条数
+const pageSize = ref(10)//每页条数
 
 //当每页条数发生了变化，调用此函数
 const onSizeChange = (size) => {
@@ -84,6 +84,38 @@ const onSizeChange = (size) => {
 const onCurrentChange = (num) => {
     pageNum.value = num
 }
+// 从后台获取文章分类数据
+const getArticleCategoryList = async()=>{
+    let result = await articleCategoryListService();
+    categorys.value = result.data;
+}
+getArticleCategoryList();
+//分页获取文章列表
+const getArticlePageData = async ()=>{
+    let articlePageQuery = {
+        pageNo:pageNum.value,
+        pageSize:pageSize.value,
+        categoryId:categoryId.value?categoryId.value:null,
+        state:state.value?state.value:null
+
+    }
+    let result = await articlePageService(articlePageQuery);
+    // 渲染数据
+    total.value = result.data.total;
+    articles.value = result.data.items;
+    //处理数据，给数据模型扩展一个属性categoryName，分类名称
+    for(let i=0;i<articles.value.length;i++){
+        let article = articles.value[i];
+        for(let j=0;j<categorys.value.length;j++){
+            if(article.categoryId===categorys.value[j].id){
+                article.categoryName = categorys.value[j].categoryName;
+            }
+
+        }
+    }
+}
+// 刷新数据从后台获取
+getArticlePageData();
 </script>
 <template>
     <el-card class="page-container">
@@ -122,7 +154,7 @@ const onCurrentChange = (num) => {
         <!-- 文章列表 -->
         <el-table :data="articles" style="width: 100%">
             <el-table-column label="文章标题" width="400" prop="title"></el-table-column>
-            <el-table-column label="分类" prop="categoryId"></el-table-column>
+            <el-table-column label="分类" prop="categoryName"></el-table-column>
             <el-table-column label="发表时间" prop="createTime"> </el-table-column>
             <el-table-column label="状态" prop="state"></el-table-column>
             <el-table-column label="操作" width="100">

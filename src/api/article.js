@@ -27,3 +27,8 @@ export const articleCategoryListService = ()=>{
     // return request.get('/category',{headers:{'Authorization':tokenStore.token}}); 已在请求拦截器中添加token，所以具体接口中不需要添加了
     return request.get('/category');
 }
+
+//分页获取文章列表
+export const articlePageService = (pageQuery)=>{
+    return request.post('/article/getPageData',pageQuery);
+}
