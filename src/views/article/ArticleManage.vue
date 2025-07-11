@@ -5,7 +5,7 @@ import {
 } from '@element-plus/icons-vue'
 
 import { ref } from 'vue'
-import {articleCategoryListService,articlePageService} from '@/api/article.js';
+import {articleCategoryListService,articlePageService,articleAddService} from '@/api/article.js';
 //文章分类数据模型
 const categorys = ref([
     {
@@ -149,6 +149,15 @@ const clearArticleModel = ()=>{
     }
 
 }
+// 添加文章
+import { ElMessage } from 'element-plus';
+const addArticle = async(state)=>{
+    articleModel.value.state = state;
+    let result =await articleAddService(articleModel.value);
+    ElMessage.success(result.msg?result.msg:'添加成功');
+    visibleDrawer.value = false;
+    getArticlePageData();
+}
 </script>
 <template>
     <el-card class="page-container">
@@ -243,8 +252,8 @@ const clearArticleModel = ()=>{
                     </div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">发布</el-button>
-                    <el-button type="info">草稿</el-button>
+                    <el-button type="primary" @click="addArticle('已发布')">发布</el-button>
+                    <el-button type="info" @click="addArticle('草稿')">草稿</el-button>
                 </el-form-item>
             </el-form>
         </el-drawer>

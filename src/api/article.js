@@ -32,3 +32,8 @@ export const articleCategoryListService = ()=>{
 export const articlePageService = (pageQuery)=>{
     return request.post('/article/getPageData',pageQuery);
 }
+
+// 文章添加
+export const articleAddService = (articleData)=>{
+    return request.post('/article',articleData);
+}
