@@ -138,6 +138,17 @@ const uploadSuccess = (result)=>{
     console.log(result.data);
     
 }
+// 清空新增文章数据模型
+const clearArticleModel = ()=>{
+    articleModel.value={
+        title: '',
+        categoryId: '',
+        coverImg: '',
+        content:'',
+        state:''
+    }
+
+}
 </script>
 <template>
     <el-card class="page-container">
@@ -145,7 +156,7 @@ const uploadSuccess = (result)=>{
             <div class="header">
                 <span>文章管理</span>
                 <div class="extra">
-                    <el-button type="primary" @click="visibleDrawer=true">添加文章</el-button>
+                    <el-button type="primary" @click="visibleDrawer=true;clearArticleModel()">添加文章</el-button>
                 </div>
             </div>
         </template>
