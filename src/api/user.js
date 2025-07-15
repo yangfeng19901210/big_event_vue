@@ -30,3 +30,9 @@ export const userInfoService = ()=>{
 export const updateUserInfoService = (userInfoData)=>{
     return request.put('/user/update',userInfoData);
 }
+// 更新用户头像
+export const updateAvatarService = (avatarUrl)=>{
+    let params = new URLSearchParams();
+    params.append('avatarUrl',avatarUrl)
+    return request.patch('user/updateAvatar',params);
+}
