@@ -5,7 +5,8 @@ import {
 } from '@element-plus/icons-vue'
 
 import { ref } from 'vue'
-import {articleCategoryListService,articlePageService,articleAddService} from '@/api/article.js';
+import {articleCategoryListService,articlePageService,
+    articleAddService,articleUpdateService,articleDeleteService} from '@/api/article.js';
 //文章分类数据模型
 const categorys = ref([
     {
@@ -150,13 +151,65 @@ const clearArticleModel = ()=>{
 
 }
 // 添加文章
-import { ElMessage } from 'element-plus';
+import { ElMessage,ElMessageBox } from 'element-plus';
 const addArticle = async(state)=>{
     articleModel.value.state = state;
     let result =await articleAddService(articleModel.value);
     ElMessage.success(result.msg?result.msg:'添加成功');
     visibleDrawer.value = false;
     getArticlePageData();
+}
+// 编辑时数据回显函数
+const showArticleData = (row)=>{
+    //显示抽屉
+    visibleDrawer.value = true;
+    title.value = '编辑文章';
+    articleModel.value = {
+        title: row.title,
+        categoryId: row.categoryId,
+        coverImg: row.coverImg,
+        content: row.content,
+        state: row.state,
+        id: row.id
+    }
+}
+// 定义抽屉的标题模型
+const title = ref('');
+// 编辑文章提交函数
+const updateArticle = async(state) =>{
+    articleModel.value.state = state;
+    let result = await articleUpdateService(articleModel.value);
+    ElMessage.success(result.message?result.message:'修改成功');
+    visibleDrawer.value = false;
+    //刷新文章列表
+    getArticlePageData();
+
+}
+// 删除文章函数
+const deleteArticle = (row)=>{
+    ElMessageBox.confirm(
+        '你确认删除该文章信息吗？',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(async () => {
+            //用户点击了确认
+            let result = await articleDeleteService(row.id)
+            ElMessage.success(result.message?result.message:'删除成功')
+            //再次调用getAllCategory，获取所有文章分类
+            getArticlePageData()
+        })
+        .catch(() => {
+            //用户点击了取消
+            ElMessage({
+                type: 'info',
+                message: '取消删除',
+            })
+        })
 }
 </script>
 <template>
@@ -165,7 +218,7 @@ const addArticle = async(state)=>{
             <div class="header">
                 <span>文章管理</span>
                 <div class="extra">
-                    <el-button type="primary" @click="visibleDrawer=true;clearArticleModel()">添加文章</el-button>
+                    <el-button type="primary" @click="visibleDrawer=true;clearArticleModel();title='添加文章'">添加文章</el-button>
                 </div>
             </div>
         </template>
@@ -202,8 +255,8 @@ const addArticle = async(state)=>{
             <el-table-column label="状态" prop="state"></el-table-column>
             <el-table-column label="操作" width="100">
                 <template #default="{ row }">
-                    <el-button :icon="Edit" circle plain type="primary"></el-button>
-                    <el-button :icon="Delete" circle plain type="danger"></el-button>
+                    <el-button :icon="Edit" circle plain type="primary" @click="showArticleData(row)"></el-button>
+                    <el-button :icon="Delete" circle plain type="danger" @click="deleteArticle(row)"></el-button>
                 </template>
             </el-table-column>
             <template #empty>
@@ -215,7 +268,7 @@ const addArticle = async(state)=>{
             layout="jumper, total, sizes, prev, pager, next" background :total="total" @size-change="onSizeChange"
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
         <!-- 抽屉 -->
-        <el-drawer v-model="visibleDrawer" title="添加文章" direction="rtl" size="50%">
+        <el-drawer v-model="visibleDrawer" :title="title" direction="rtl" size="50%">
             <!-- 添加文章表单 -->
             <el-form :model="articleModel" label-width="100px" >
                 <el-form-item label="文章标题" >
@@ -252,8 +305,8 @@ const addArticle = async(state)=>{
                     </div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="addArticle('已发布')">发布</el-button>
-                    <el-button type="info" @click="addArticle('草稿')">草稿</el-button>
+                    <el-button type="primary" @click="title==='添加文章'?addArticle('已发布'):updateArticle('已发布')">发布</el-button>
+                    <el-button type="info" @click="title==='添加文章'?addArticle('草稿'):updateArticle('草稿')">草稿</el-button>
                 </el-form-item>
             </el-form>
         </el-drawer>

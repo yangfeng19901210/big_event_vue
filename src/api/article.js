@@ -37,3 +37,12 @@ export const articlePageService = (pageQuery)=>{
 export const articleAddService = (articleData)=>{
     return request.post('/article',articleData);
 }
+
+// 文章修改
+export const articleUpdateService = (articleModel)=>{
+    return request.put('/article',articleModel);
+}
+// 删除文章信息
+export const articleDeleteService = (id)=>{
+    return request.delete('/article?id='+id);
+}
