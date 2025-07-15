@@ -28,6 +28,9 @@ instance.interceptors.response.use(
         // 判断业务状态码
         if(result.data.code===200){
             return result.data;
+        }else if (result.data.code===500 && result.data.message==='令牌不能为空') {
+            ElMessage.error(result.data.message?result.data.message:'请先登录');
+            router.push('/login');
         }else if (result.data.code===401) {
             ElMessage.error(result.data.message?result.data.message:'请先登录');
             router.push('/login');
