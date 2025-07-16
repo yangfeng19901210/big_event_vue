@@ -36,3 +36,8 @@ export const updateAvatarService = (avatarUrl)=>{
     params.append('avatarUrl',avatarUrl)
     return request.patch('user/updateAvatar',params);
 }
+
+// 重置用户密码
+export const resetPasswordService = (resetPasswordData)=>{
+    return request.patch('/user/updatePwd',resetPasswordData);
+}

@@ -29,9 +29,14 @@ instance.interceptors.response.use(
         if(result.data.code===200){
             return result.data;
         // 用户退出后将不不能访问，直接跳转到登录页面
-        }else if (result.data.code===500 && result.data.message==='令牌不能为空') {
-            ElMessage.error(result.data.message?result.data.message:'请先登录');
-            router.push('/login');
+        }else if (result.data.code===500) {
+            if(result.data.message==='令牌不能为空'){
+                ElMessage.error(result.data.message?result.data.message:'请先登录');
+                router.push('/login');
+            }else{
+               ElMessage.error(result.data.message?result.data.message:'服务异常'); 
+            }
+            
         // 非法的token直接跳转到登录页面
         }else if (result.data.code===401) {
             ElMessage.error(result.data.message?result.data.message:'请先登录');
