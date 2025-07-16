@@ -62,15 +62,15 @@ const resetPassword = async()=>{
         </template>
         <el-row>
             <el-col :span="12">
-                <el-form :model="resetPasswordData" :rules="rules" label-width="100px" size="large">
+                <el-form :model="resetPasswordData" :rules="rules" label-width="100px" size="default">
                     <el-form-item label="原始密码" prop="oldPwd">
-                        <el-input v-model="resetPasswordData.oldPwd" type="password" show-password></el-input>
+                        <el-input v-model="resetPasswordData.oldPwd" type="password" show-password style="width: 350px"></el-input>
                     </el-form-item>
                     <el-form-item label="新密码" prop="newPwd">
-                        <el-input v-model="resetPasswordData.newPwd" type="password" show-password></el-input>
+                        <el-input v-model="resetPasswordData.newPwd" type="password" show-password style="width: 350px"></el-input>
                     </el-form-item>
                     <el-form-item label="确认新密码" prop="rePwd">
-                        <el-input v-model="resetPasswordData.rePwd" type="password" show-password></el-input>
+                        <el-input v-model="resetPasswordData.rePwd" type="password" show-password style="width: 350px"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="resetPassword">提交修改</el-button>
