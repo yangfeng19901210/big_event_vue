@@ -47,6 +47,9 @@ const register = async ()=>{
     // registerData是一个响应式对象，如果要获取值，需要.value
     let result = await userRegisterService(registerData.value);
     ElMessage.success(result.msg?result.msg:'注册成功');
+    //切换到登录页面
+    isRegister.value = false;
+
 }
 // 执行登录
 const router = useRouter();
