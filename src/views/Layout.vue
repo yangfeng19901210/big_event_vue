@@ -122,10 +122,10 @@ const handleCommand = (command)=>{
         <el-container>
             <!-- 头部区域 -->
             <el-header>
-                <div>黑马程序员：<strong>{{userInfoStore.info.nickname}}</strong></div>
+                <div>黑马程序员：<strong>{{userInfoStore?.info?.nickname?userInfoStore.info.nickname:'未设置'}}</strong></div>
                 <el-dropdown placement="bottom-end" @command="handleCommand">
                     <span class="el-dropdown__box">
-                        <el-avatar :src="userInfoStore.info.userPic?userInfoStore.info.userPic:avatar" />
+                        <el-avatar :src="userInfoStore?.info?.userPic?userInfoStore.info.userPic:avatar" />
                         <el-icon>
                             <CaretBottom />
                         </el-icon>

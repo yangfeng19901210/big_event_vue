@@ -10,7 +10,7 @@ const uploadRef = ref()
 const userInfoStore = useUserInfoStore()
 const tokenStore = useTokenStore();
 //用户头像地址
-const imgUrl=ref(userInfoStore.info.userPic)
+const imgUrl=ref(userInfoStore?.info?.userPic?userInfoStore.info.userPic:avatar)
 const uploadSuccess = (result)=>{
     imgUrl.value = result.data;
     
