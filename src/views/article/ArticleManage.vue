@@ -253,10 +253,21 @@ const deleteArticle = (row)=>{
             <el-table-column label="分类" prop="categoryName"></el-table-column>
             <el-table-column label="发表时间" prop="createTime"> </el-table-column>
             <el-table-column label="状态" prop="state"></el-table-column>
-            <el-table-column label="操作" width="100">
+            <el-table-column label="操作" width="150px">
                 <template #default="{ row }">
-                    <el-button :icon="Edit" circle plain type="primary" @click="showArticleData(row)"></el-button>
-                    <el-button :icon="Delete" circle plain type="danger" @click="deleteArticle(row)"></el-button>
+                    <div class="compact-buttons">
+                        <el-button text @click="showArticleData(row)">编辑</el-button>
+                        <el-button text @click="deleteArticle(row)">删除</el-button>
+                        <el-dropdown>
+                            <el-button text class="more-btn">更多</el-button> <!-- 添加自定义类名 -->
+                            <template #dropdown>
+                            <el-dropdown-menu>
+                                <el-dropdown-item @click="exportArticle(row)">导出</el-dropdown-item>
+                                <el-dropdown-item @click="exportArticle(row)">设置</el-dropdown-item>
+                            </el-dropdown-menu>
+                            </template>
+                        </el-dropdown>
+                    </div>
                 </template>
             </el-table-column>
             <template #empty>
@@ -359,5 +370,24 @@ const deleteArticle = (row)=>{
   :deep(.ql-editor) {
     min-height: 200px;
   }
+}
+/* 关键样式 */
+.compact-buttons {
+  display: flex;
+  flex-wrap: nowrap;       /* 禁止换行 */
+  gap: 3px;                /* 按钮间距设为 5px（按需调整） */
+}
+
+/* 重置所有按钮的默认外边距 */
+.compact-buttons :deep(.el-button) {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 3px 4px;        /* 减小内边距使按钮更紧凑 */
+  outline: none !important;
+}
+
+/* 单独调整下拉菜单按钮间距 */
+.compact-buttons :deep(.more-btn) {
+  margin-left: 0;          /* 消除左侧多余间距 */
 }
 </style>
