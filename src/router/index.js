@@ -7,7 +7,9 @@ import ArticleManage from '@/views/article/ArticleManage.vue';
 import UserInfo from '@/views/user/UserInfo.vue';
 import UserAvatar from '@/views/user/UserAvatar.vue';
 import UserResetPassword from '@/views/user/UserResetPassword.vue';
-import System from '@/views/system/System.vue';
+import UserManage from '@/views/system/UserManage.vue';
+import RoleManage from '@/views/system/RoleManage.vue';
+import PermissionManage from '@/views/system/PermissionManage.vue';
 // 定义路由关系
 const routes = [
   { path: '/login', component: Loginvue },
@@ -34,9 +36,19 @@ const routes = [
         component: UserResetPassword,
       },
       {
-        path: '/system',
-        component: System,
+        path: '/system/user',
+        component: UserManage,
       }
+      ,
+      {
+        path: '/system/role',
+        component: RoleManage,
+      },
+      {
+        path: '/system/perm',
+        component: PermissionManage,
+      }
+
     ],
   }
 ]
