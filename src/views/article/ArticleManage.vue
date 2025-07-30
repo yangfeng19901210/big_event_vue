@@ -259,7 +259,7 @@ const deleteArticle = (row)=>{
                         <el-button text @click="showArticleData(row)">编辑</el-button>
                         <el-button text @click="deleteArticle(row)">删除</el-button>
                         <el-dropdown>
-                            <el-button text class="more-btn">更多</el-button> <!-- 添加自定义类名 -->
+                            <el-button text class="more-btn">更多</el-button> 
                             <template #dropdown>
                             <el-dropdown-menu>
                                 <el-dropdown-item @click="exportArticle(row)">导出</el-dropdown-item>

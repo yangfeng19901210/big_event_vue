@@ -41,3 +41,13 @@ export const updateAvatarService = (avatarUrl)=>{
 export const resetPasswordService = (resetPasswordData)=>{
     return request.patch('/user/updatePwd',resetPasswordData);
 }
+//用户退出执行后端操作
+export const logoutService = ()=>{
+    return request.post('/user/logout');
+}
+
+//分页获取用户信息
+export const userPageService = (pageQuery)=>{
+    return request.post('/user/getUserPageData',pageQuery);
+}
+

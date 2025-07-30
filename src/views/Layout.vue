@@ -12,7 +12,7 @@ import {
 } from '@element-plus/icons-vue'
 import avatar from '@/assets/default.png'
 
-import { userInfoService } from '@/api/user'
+import { userInfoService,logoutService } from '@/api/user'
 import { useUserInfoStore } from '@/stores/userInfo.js'
 import {useTokenStore} from '@/stores/token.js'
 import { ElMessage,ElMessageBox } from 'element-plus'
@@ -44,6 +44,7 @@ const handleCommand = (command)=>{
     )
         .then(async () => {
             // 1.清空token和用户信息
+            await logoutService();
             tokenStore.removeToken();
             userInfoStore.removeInfo();
             // 2.跳转到登录页
