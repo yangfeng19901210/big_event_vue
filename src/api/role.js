@@ -6,8 +6,8 @@ export const getAllRolesService = ()=>{
     return request.get('/role/getAllRoles');
 }
 // 获取当前用户角色
-export const getCurrentUserRolesService = ()=>{
-    return request.get('/role/getCurrentUserRoles');
+export const getUserRolesService = (userId)=>{
+    return request.get('/role/getUserRoles/'+userId);
 }
 
 

@@ -50,4 +50,8 @@ export const logoutService = ()=>{
 export const userPageService = (pageQuery)=>{
     return request.post('/user/getUserPageData',pageQuery);
 }
+// 添加文章分类
+export const setUserRolesService = (userRolesModel)=>{
+    return request.post('/user/setRolesToUser',userRolesModel);
+}
 

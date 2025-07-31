@@ -1,14 +1,15 @@
 <script setup>
 import {
     Edit,
-    Delete
+    Delete,
+    UserFilled
 } from '@element-plus/icons-vue'
 
 import { ref,reactive  } from 'vue'
 const userName = ref('')
 const nickName = ref('')
-import { userPageService } from '@/api/user'    
-import { getAllRolesService,getCurrentUserRolesService } from '@/api/role'
+import { userPageService,setUserRolesService } from '@/api/user'    
+import { getAllRolesService,getUserRolesService } from '@/api/role'
 //文章分类数据模型
 const categorys = ref([
     {
@@ -65,7 +66,7 @@ const total = ref(3)//总条数
 const pageSize = ref(10)//每页条数
 const centerDialogVisible = ref(false)
 const selectedRoles = ref([]); // 初始化为空数组
-const setRoleDataModel = ref({
+const showUserDataModel = ref({
   nickName: '',
   userName: ''
 })
@@ -95,14 +96,26 @@ const getUserPageData = async ()=>{
 getUserPageData();
 const allRoles = ref([]); // 初始化为空数组
 const loadAllRoles = async(row)=>{
-    setRoleDataModel.value.nickName = row.nickname;
-    setRoleDataModel.value.userName = row.username;
+    showUserDataModel.value.nickName = row.nickname;
+    showUserDataModel.value.userName = row.username;
     let result = await getAllRolesService();
     allRoles.value = result.data;
     //获取当前用户角色并设置
-    let userRolesData =  await getCurrentUserRolesService();
-    selectedRoles.value = userRolesData.data.map(role=>role.roleCode);
+    let userRolesData =  await getUserRolesService(row.id);
+    selectedRoles.value = userRolesData.data.map(role=>role.id);
+    setUserRolesDataModel.value.userId = row.id;
 
+}
+//设置用户角色数据模型
+const setUserRolesDataModel = ref({
+    userId:'',
+    roleIds:[]
+});
+const setUserRoles = async()=>{
+    setUserRolesDataModel.value.roleIds = selectedRoles.value;
+    let result = await setUserRolesService(setUserRolesDataModel.value);
+    ElMessage.success(result.msg?result.msg:'设置成功');
+    
 }
 </script>
 <template>
@@ -175,24 +188,24 @@ const loadAllRoles = async(row)=>{
             width="500"
             align-center
         >
-            <el-form :model="setRoleDataModel" label-width="auto" style="max-width: 600px">
+            <el-form :model="showUserDataModel" label-width="auto" style="max-width: 600px">
                 <el-form-item label="用户昵称">
-                    <el-input v-model="setRoleDataModel.nickName" disabled/>
+                    <el-input v-model="showUserDataModel.nickName" disabled/>
                 </el-form-item>
                 <el-form-item label="用户名">
-                    <el-input v-model="setRoleDataModel.userName" disabled/>
+                    <el-input v-model="showUserDataModel.userName" disabled/>
                 </el-form-item>
                 <el-form-item label="角色设置">
                 <el-checkbox-group v-model="selectedRoles">
-                   <el-checkbox v-for="role in allRoles" :value="role.roleCode" :key="role.roleCode">{{ role.roleName }}</el-checkbox>
+                   <el-checkbox v-for="role in allRoles" :value="role.id" :key="role.id">{{ role.roleName }}</el-checkbox>
                 </el-checkbox-group>
                 </el-form-item>
             </el-form>
             <template #footer>
             <div class="dialog-footer">
-                <el-button @click="centerDialogVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="centerDialogVisible = false">
-                Confirm
+                <el-button @click="centerDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="centerDialogVisible = false;setUserRoles()">
+                确定
                 </el-button>
             </div>
             </template>

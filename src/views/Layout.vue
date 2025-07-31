@@ -22,7 +22,8 @@ const tokenStore = useTokenStore();
 const getUserInfo = async()=>{
     // 获取用户信息
     let result = await userInfoService();
-    console.log(result);
+    console.log("获取到的用户信息为"+result);
+    
     
     // 数据存储到pinia中
     userInfoStore.setInfo(result.data);

@@ -24,13 +24,15 @@ instance.interceptors.request.use(
 );
 // 添加响应拦截器(本身就是异步处理)
 instance.interceptors.response.use(
+    
     result=>{
+        console.log('result'+JSON.stringify(result));
         // 判断业务状态码
         if(result.data.code===200){
             return result.data;
         // 用户退出后将不不能访问，直接跳转到登录页面
         }else if (result.data.code===500) {
-            if(result.data.message==='令牌不能为空'){
+            if(result.data.message==='令牌不能为空' || result.data.message==='token无效'){
                 ElMessage.error(result.data.message?result.data.message:'请先登录');
                 router.push('/login');
             }else{
