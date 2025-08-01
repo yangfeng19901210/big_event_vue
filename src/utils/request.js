@@ -24,7 +24,6 @@ instance.interceptors.request.use(
 );
 // 添加响应拦截器(本身就是异步处理)
 instance.interceptors.response.use(
-    
     result=>{
         // 判断业务状态码
         if(result.data.code===200){
@@ -47,7 +46,9 @@ instance.interceptors.response.use(
         
     },
     err=>{
-        ElMessage.error('服务异常'); 
+        if(err.response?.status===403){
+            ElMessage.error('您无权进行此操作'); 
+        }
         return Promise.reject(err);//异步的状态转化成失败的状态
     }
 )
