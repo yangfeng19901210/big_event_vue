@@ -10,6 +10,9 @@ const userName = ref('')
 const nickName = ref('')
 import { userPageService,setUserRolesService } from '@/api/user'    
 import { getAllRolesService,getUserRolesService } from '@/api/role'
+import { useUserInfoStore } from '@/stores/userInfo.js'
+const userInfoStore = useUserInfoStore();
+const userRoles = ref([...userInfoStore.userRoles])
 //文章分类数据模型
 const categorys = ref([
     {
@@ -165,7 +168,7 @@ const setUserRoles = async()=>{
                     >
                     删除
                     </el-button>
-                    <el-button
+                    <el-button v-show="userRoles.includes('ADMIN')"
                     size="small"
                     type="danger"
                     @click="centerDialogVisible = true;loadAllRoles(row)"

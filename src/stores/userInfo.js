@@ -13,8 +13,18 @@ export const useUserInfoStore = defineStore('userInfo',()=>{
     const removeInfo = ()=>{
         info.value = {};
     }
+    //定义当前用户角色响应内容
+    const userRoles = ref([]);
+    //设置当前用户对应的角色信息
+    const setUserRoles = (userRolesInfo)=>{
+        userRoles.value = userRolesInfo;
+    }
+    // 移除用户角色
+    const removeUserRoles = ()=>{
+        userRoles.value = [];
+    }
     return {
-        info,setInfo,removeInfo
+        info,setInfo,removeInfo,userRoles,setUserRoles,removeUserRoles
     }
 },{
     persist:true

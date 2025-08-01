@@ -12,7 +12,7 @@ import {
 } from '@element-plus/icons-vue'
 import avatar from '@/assets/default.png'
 
-import { userInfoService,logoutService } from '@/api/user'
+import { userInfoService,logoutService,getCurrentUserRolesService } from '@/api/user'
 import { useUserInfoStore } from '@/stores/userInfo.js'
 import {useTokenStore} from '@/stores/token.js'
 import { ElMessage,ElMessageBox } from 'element-plus'
@@ -22,11 +22,15 @@ const tokenStore = useTokenStore();
 const getUserInfo = async()=>{
     // 获取用户信息
     let result = await userInfoService();
-    console.log("获取到的用户信息为"+result);
-    
-    
+    // console.log("获取到的用户信息为"+result);
+
     // 数据存储到pinia中
     userInfoStore.setInfo(result.data);
+    let userRolesResult = await getCurrentUserRolesService();
+    // console.log('获取到用户角色信息为:'+JSON.stringify(userRolesResult.data.map(role=>role.roleCode)));
+    
+    // 存储用户角色到pinia中
+    userInfoStore.setUserRoles(userRolesResult.data.map(role=>role.roleCode));
 }
 getUserInfo();
 // 条目被点击后，调用的函数

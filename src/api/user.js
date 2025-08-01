@@ -54,4 +54,8 @@ export const userPageService = (pageQuery)=>{
 export const setUserRolesService = (userRolesModel)=>{
     return request.post('/user/setRolesToUser',userRolesModel);
 }
+// 获取当前用户角色信息
+export const getCurrentUserRolesService = () =>{
+    return request.get('/user/getCurrentUserRoles');
+}
 
